@@ -5,19 +5,19 @@ public class Drone {
     public String posDrone ; // position du drone en temps réel
 
     public void setDatas(String datas) {
-        datas = this.datas;
+         this.datas =datas;
     }
     public String getData(){
         return this.datas ;
     }
     public void setState(boolean state) {
-        state = this.state ;
+         this.state =state ;
     }
     public boolean getState(){
         return this.state ;
     }
     public void setPosDrone(String posDrone){
-        posDrone = this.posDrone;
+         this.posDrone=posDrone;
     }
     public String getPosDrone(){
         return this.posDrone;

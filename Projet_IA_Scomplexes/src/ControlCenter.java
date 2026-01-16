@@ -2,13 +2,13 @@ public class ControlCenter {
     public String posBase ;  // position/coordonnées de la base
     public String datasCenter;
     public void setPosBase(String posBase) {
-        posBase = this.posBase;
+        this.posBase=posBase;
     }
     public String getPosBase(){
         return this.posBase;
     }
     public void setDatasCenter(String datasCenter) {
-        datasCenter = this.datasCenter;
+        this.datasCenter=datasCenter;
     }
     public String getData(){
         return this.datasCenter;

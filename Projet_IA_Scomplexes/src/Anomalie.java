@@ -8,21 +8,21 @@ public class Anomalie {
         return this.state ;
     }
     public void setState(boolean state){
-        state=this.state ;
+        this.state =state ;
     }
 
     public String getPosAnomalie(){
         return this.posAnomalie;
     }
     public void setPosAnomalie(String posAnomalie){
-        posAnomalie= this.posAnomalie;
+        this.posAnomalie =posAnomalie;
     }
 
     public int intensite(){
         return this.intensite ;
     }
     public void setIntensite(int intensite){
-        intensite = this.intensite;
+         this.intensite =intensite;
     }
 
     public boolean getIntervention(){

@@ -6,6 +6,6 @@ public class Environnement {
         return this.state;
     }
     public void setState(boolean state){
-        state=this.state ;
+        this.state=state ;
     }
 }

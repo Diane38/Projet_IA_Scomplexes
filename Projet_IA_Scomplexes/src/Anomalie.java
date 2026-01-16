@@ -2,7 +2,8 @@ public class Anomalie {
     public int intensite ; // niveau d'intensité de l'anomalie : priorité de 1 à 3
     public boolean state ; // verifie si il y a anomalie ou non (ptet dans environnement aussi)
     public boolean intervention ; // défini le type d'intervention nécessaire : false si humain, true si robot
-    public String posAnomalie ; // position de l'anomalie
+    private int posX ; // position de l'anomalie
+    private int posY;
 
     public boolean getState(){
         return this.state ;
@@ -11,11 +12,17 @@ public class Anomalie {
         this.state =state ;
     }
 
-    public String getPosAnomalie(){
-        return this.posAnomalie;
+    public void setPosX(int posX) {
+        this.posX=posX;
     }
-    public void setPosAnomalie(String posAnomalie){
-        this.posAnomalie =posAnomalie;
+    public void setPosY(int posY) {
+        this.posY=posY;
+    }
+    public int getPosX(){
+        return this.posX;
+    }
+    public int getPosY(){
+        return this.posY;
     }
 
     public int intensite(){

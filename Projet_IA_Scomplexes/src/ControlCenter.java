@@ -1,11 +1,18 @@
 public class ControlCenter {
-    public String posBase ;  // position/coordonnées de la base
+    private int posX ;
+    private int posY;
     public String datasCenter;
-    public void setPosBase(String posBase) {
-        this.posBase=posBase;
+    public void setPosX(int posX) {
+        this.posX=posX;
     }
-    public String getPosBase(){
-        return this.posBase;
+    public void setPosY(int posY) {
+        this.posY=posY;
+    }
+    public int getPosX(){
+        return this.posX;
+    }
+    public int getPosY(){
+        return this.posY;
     }
     public void setDatasCenter(String datasCenter) {
         this.datasCenter=datasCenter;
@@ -25,7 +32,7 @@ public class ControlCenter {
     //renvoie true si les drones ont reçus leur mise a jour
     // la mise à jour est reçue seulement quand les drones sont a la base
     public boolean updateDrones(Drone d) {
-        if (d.getPosDrone() == getPosBase()){
+        if (d.getPosY() == getPosY() && d.getPosX() == getPosX()){
             return true ;
         }
         return false ;

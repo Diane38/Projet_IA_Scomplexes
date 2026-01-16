@@ -1,5 +1,4 @@
 public class ControlCenter {
-    public ControlCenter center ; // un seul centre de controle
     public String posBase ;  // position/coordonnées de la base
     public String datasCenter;
     public void setPosBase(String posBase) {
@@ -15,7 +14,7 @@ public class ControlCenter {
         return this.datasCenter;
     }
 
-    //TODO : renvoie true si les données ont été reçues dans la base
+    //renvoie true si les données ont été reçues dans la base
     public boolean datasReceived(Drone d) {
         if (d.getData() == getData()) {
             return true;
@@ -23,7 +22,7 @@ public class ControlCenter {
         return false ;
     }
 
-    //TODO : renvoie true si les drones ont reçus leur mise a jour
+    //renvoie true si les drones ont reçus leur mise a jour
     // la mise à jour est reçue seulement quand les drones sont a la base
     public boolean updateDrones(Drone d) {
         if (d.getPosDrone() == getPosBase()){

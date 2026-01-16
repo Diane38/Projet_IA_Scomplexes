@@ -1,5 +1,4 @@
 public class Drone {
-    public Drone[] tabDrones = new Drone[7]; // tableau de drones : taille maximale de 7
     public boolean state ; // etat du drone : actif ou inactif
     public String typeState ; // type d'etat du drone inactif : en recharge, en analyse
     public String datas ; // données récoltées
@@ -24,7 +23,7 @@ public class Drone {
         return this.posDrone;
     }
 
-    //TODO : renvoie true si les données du centre ont été envoyées
+    //renvoie true si les données du centre ont été envoyées
     // le drone ne peut envoyer qu'en dehors de la base
     public boolean sendDatas(ControlCenter c) {
         if (getPosDrone() != c.getPosBase()) {

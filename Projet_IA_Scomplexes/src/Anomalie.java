@@ -1,5 +1,4 @@
 public class Anomalie {
-    public Anomalie[] anomalies ;
     public int intensite ; // niveau d'intensité de l'anomalie : priorité de 1 à 3
     public boolean state ; // verifie si il y a anomalie ou non (ptet dans environnement aussi)
     public boolean intervention ; // défini le type d'intervention nécessaire : false si humain, true si robot

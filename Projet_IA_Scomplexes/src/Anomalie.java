@@ -12,10 +12,8 @@ public class Anomalie {
         this.state =state ;
     }
 
-    public void setPosX(int posX) {
+    public void setPosDrone(int posX, int posY){
         this.posX=posX;
-    }
-    public void setPosY(int posY) {
         this.posY=posY;
     }
     public int getPosX(){

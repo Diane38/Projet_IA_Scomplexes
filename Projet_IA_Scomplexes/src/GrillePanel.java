@@ -1,9 +1,8 @@
-
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class UserInterface extends JPanel {
+public class GrillePanel extends JPanel {
 
     private int lignes = 10;
     private int colonnes = 10;
@@ -21,10 +20,7 @@ public class UserInterface extends JPanel {
 
         for (int j = 0; j < colonnes; j++) {
             for (int i = 0; i < lignes; i++) {
-                //Couleur lier au tableau
-                if(grille.get(i*10+j).getClass() == Drone.class){
-                    g.setColor(Color.green);
-                }else
+        // Exemple : couleur alternée
                 g.setColor((Color)grille.get(i*10+j));
 
                 g.fillRect(
@@ -61,9 +57,7 @@ public class UserInterface extends JPanel {
                     grilleCouleurs.add(Color.blue);
                 }
             }
-            //Test
             grilleCouleurs.set(88, Color.red);
-            grilleCouleurs.set(1, new Drone());
         return grilleCouleurs;
     }
 
@@ -72,7 +66,7 @@ public class UserInterface extends JPanel {
             JFrame frame = new JFrame("Grille colorée");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-            frame.add(new UserInterface());
+            frame.add(new GrillePanel());
             frame.pack();
             frame.setLocationRelativeTo(null);
             frame.setVisible(true);

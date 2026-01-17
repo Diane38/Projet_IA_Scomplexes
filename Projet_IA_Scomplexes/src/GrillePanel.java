@@ -21,11 +21,7 @@ public class GrillePanel extends JPanel {
         for (int j = 0; j < colonnes; j++) {
             for (int i = 0; i < lignes; i++) {
         // Exemple : couleur alternée
-                if ((i + j) % 2 == 0) {
-                    g.setColor(Color.BLUE);
-                } else {
-                    g.setColor(Color.YELLOW);
-                }
+                g.setColor((Color)grille.get(i*10+j));
 
                 g.fillRect(
                         j * tailleCase,
@@ -61,6 +57,7 @@ public class GrillePanel extends JPanel {
                     grilleCouleurs.add(Color.blue);
                 }
             }
+            grilleCouleurs.set(88, Color.red);
         return grilleCouleurs;
     }
 

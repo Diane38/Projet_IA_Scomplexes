@@ -41,7 +41,7 @@ public class ControlCenter {
 
     //renvoie true si les données ont été reçues dans la base
     public void datasReceived(Drone d) {
-        if (d.sendDatas(this)) {  // Le drone peut envoyer?
+        if (d.sendDatas(this)) {
             this.datasCenter += d.getData() + "\n";
         }
     }

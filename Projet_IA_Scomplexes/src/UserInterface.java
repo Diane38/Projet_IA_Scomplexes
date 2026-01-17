@@ -69,7 +69,7 @@ public class UserInterface extends JPanel {
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            JFrame frame = new JFrame("Grille colorée");
+            JFrame frame = new JFrame("Projet IA Scomplexes");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
             frame.add(new UserInterface());

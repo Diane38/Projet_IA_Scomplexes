@@ -66,16 +66,4 @@ public class UserInterface extends JPanel {
             grilleCouleurs.set(1, new Drone());
         return grilleCouleurs;
     }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            JFrame frame = new JFrame("Grille colorée");
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-            frame.add(new UserInterface());
-            frame.pack();
-            frame.setLocationRelativeTo(null);
-            frame.setVisible(true);
-        });
-    }
 }

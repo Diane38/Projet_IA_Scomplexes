@@ -165,7 +165,7 @@ public class UserInterface extends JPanel {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             // Créer l'environnement et le centre de contrôle
-            Environnement env = new Environnement(800, 800);
+            Environnement env = new Environnement(500, 500);
             ControlCenter c = new ControlCenter(400, 400, env);
 
             // Ajouter 7 drones

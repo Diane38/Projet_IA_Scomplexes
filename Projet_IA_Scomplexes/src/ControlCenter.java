@@ -5,7 +5,7 @@ public class ControlCenter {
     private int posX, posY;
     private String datasCenter;
     private List<Drone> drones;
-    private Environnement environnement;
+    private Environnement env;
 
     public void setPosBase(int posX, int posY){
         this.posX=posX;
@@ -24,10 +24,12 @@ public class ControlCenter {
         return this.datasCenter;
     }
 
-    public ControlCenter(int posX, int posY) {
+    public ControlCenter(int posX, int posY, Environnement env) {
         this.posX = posX;
         this.posY = posY;
         this.drones = new ArrayList<>();
+        this.env = env;
+        this.datasCenter = "";
     }
 
     // ajoute un drone à la liste
@@ -59,48 +61,64 @@ public class ControlCenter {
     // mise à jour la simulation
     public void updateSimulation(long deltaTime) {
         for (Drone d : drones) {
-            // si batterie faible, retour à la base
+            d.updateBattery(deltaTime);
+            d.updatePosition();
+
             if (d.needsRecharge()) {
                 d.setState(Drone.DroneState.RETURNING_TO_BASE);
             }
+            switch(d.getState()) {
+                case RETURNING_TO_BASE:
+                    if (d.getPosX() != posX || d.getPosY() != posY) {
+                        d.moveTo(posX, posY);  // Aller à la base
+                    } else {
+                        d.setState(Drone.DroneState.CHARGING);
+                        datasReceived(d);
+                    }
+                    break;
 
-            if (d.getState() == Drone.DroneState.RETURNING_TO_BASE) {
-                moveTowardBase(d);
-                // Si arrivé à la base, réception des données
-                if (d.getPosX() == posX && d.getPosY() == posY) {
-                    d.setState(Drone.DroneState.CHARGING);
-                    datasReceived(d);
-                }
-            }
-            else if (d.getState() == Drone.DroneState.CHARGING) {
-                // Recharger le drone
-                // Si batterie pleine
-                if (d.getBatteryLevel() >= 100) {
+                case CHARGING:
+                    if (d.getBatteryLevel() >= 100) {
+                        d.setState(Drone.DroneState.ACTIVE);
+                    }
+                    break;
+
+                case ACTIVE:
+                    Anomalie nearbyAnomaly = env.findNearbyAnomaly(d, 80);
+
+                    if (nearbyAnomaly != null && !d.isMoving()) {
+                        d.moveTo(nearbyAnomaly.getPosX(), nearbyAnomaly.getPosY());
+                        System.out.println("Drone " + d.getDroneId() + " va vers anomalie à ("
+                                + nearbyAnomaly.getPosX() + "," + nearbyAnomaly.getPosY() + ")");
+                    }
+                    else if (d.getPosX() == nearbyAnomaly.getPosX() &&
+                            d.getPosY() == nearbyAnomaly.getPosY()) {
+                        d.setState(Drone.DroneState.ANALYZING);
+                        d.analyzeAnomaly(nearbyAnomaly);
+                        nearbyAnomaly.setDetected(true);
+                    }
+                    else if (!d.isMoving()) {
+                        randomExploration(d, env.getMapWidth());
+                    }
+                    break;
+
+                case ANALYZING:
                     d.setState(Drone.DroneState.ACTIVE);
-                }
-            }
-            else if (d.getState() == Drone.DroneState.ACTIVE) {
-                Anomalie nearbyAnomaly = environnement.findNearbyAnomaly(d, 50);
-                if (nearbyAnomaly != null && d.getState() != Drone.DroneState.ANALYZING) {
-                    d.setState(Drone.DroneState.ANALYZING);
-                    d.analyzeAnomaly(nearbyAnomaly);
-                } else if (d.getState() == Drone.DroneState.ANALYZING) {
-                    d.setState(Drone.DroneState.ACTIVE);
-                }
+                    break;
             }
         }
-        environnement.update(deltaTime);
+        env.update(deltaTime);
+    }
+    public void randomExploration(Drone d, int mapSize) {
+        int newX = (int)(Math.random() * mapSize);
+        int newY = (int)(Math.random() * mapSize);
+        d.moveTo(newX, newY);  // Au lieu de move()
     }
 
     private void moveTowardBase(Drone d) {
-        // approcher le drone de la base
-        int dx = posX - d.getPosX();
-        int dy = posY - d.getPosY();
-
-        int newX = d.getPosX() + Integer.compare(dx, 0);
-        int newY = d.getPosY() + Integer.compare(dy, 0);
-
-        d.setPosDrone(newX, newY);
+        if (d.getPosX() != posX || d.getPosY() != posY) {
+            d.moveTo(posX, posY);  // Au lieu de move()
+        }
     }
 
     // assigner des zones à la patrouille de drones

@@ -8,7 +8,20 @@ public class Drone {
     private long activationTime;     // quand le drone a été activé
     private static final int MAX_ACTIVE_TIME = 30 * 60 * 1000; // 30 min en ms
     private static final int RECHARGE_TIME = 10 * 60 * 1000;   // 10 min en ms
+    private int droneId;
+    private int destX;
+    private int destY;
+    private boolean isMoving = false;
 
+    public Drone(int droneId) {
+        this.droneId = droneId;
+        this.state = DroneState.INACTIVE;  // ← Initialiser l'état
+        this.batteryLevel = 100;
+        this.datas = "";
+        this.posX = 0;
+        this.posY = 0;
+        this.activationTime = System.currentTimeMillis();
+    }
 
     public void setState(DroneState state) {
         this.state = state;
@@ -32,6 +45,9 @@ public class Drone {
     public int getPosY(){
         return this.posY;
     }
+    public void setBatteryLevel(int batteryLevel) {this.batteryLevel = batteryLevel;}
+    public int getBatteryLevel() {return batteryLevel;}
+    public int getDroneId() {return droneId;}
 
     //renvoie true si les données du centre ont été envoyées
     // le drone ne peut envoyer qu'en dehors de la base
@@ -70,7 +86,27 @@ public class Drone {
         }
     }
 
-    public int getBatteryLevel() {
-        return batteryLevel;
+    // Déplacer le drone à sa destination
+    public void moveTo(int targetX, int targetY) {
+        this.destX = targetX;
+        this.destY = targetY;
+        this.isMoving = true;
+    }
+
+    // Avancer vers la destination
+    public void updatePosition() {
+        if (!isMoving) return;
+        if (posX == destX && posY == destY) {
+            isMoving = false;
+            return;
+        }
+        if (posX < destX) posX++;
+        else if (posX > destX) posX--;
+
+        if (posY < destY) posY++;
+        else if (posY > destY) posY--;
+    }
+    public boolean isMoving() {
+        return isMoving;
     }
 }

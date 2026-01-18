@@ -1,29 +1,24 @@
 public class Anomalie {
-    private int posX, posY;
     private String type;
     private int intensity; // entre 0 et 100
     private boolean isDetected;
     public enum InterventionType { ROBOT, HUMAN, NONE }
     private InterventionType interventionNeeded;
 
-    public Anomalie(int posX, int posY, String type, int intensity) {
-        this.posX = posX;
-        this.posY = posY;
+    public Anomalie(String type, int intensity) {
         this.type = type;
         this.intensity = intensity;
         this.isDetected = false;
     }
-    public int getPosX() { return posX; }
-    public int getPosY() { return posY; }
+
     public String getType() { return type; }
     public int getIntensity() { return intensity; }
     public void setIntensity(int intensity) { this.intensity = intensity; }
     public boolean isDetected() { return this.isDetected;}
     public void setDetected(boolean detected) {this.isDetected = detected;}
-
     public InterventionType getInterventionNeeded() {return interventionNeeded;}
 
-    // Déterminer le type d'intervention basé sur le type et l'intensité
+     // Déterminer le type d'intervention basé sur le type et l'intensité
     private InterventionType determineIntervention(String type, int intensity) {
         if (intensity < 30) {
             return InterventionType.NONE;
@@ -48,14 +43,4 @@ public class Anomalie {
         }
         this.interventionNeeded = determineIntervention(type, intensity);
     }
-
-    // afficher les informations
-    @Override
-    public String toString() {
-        return String.format(
-                "Anomalie: type=%s, pos=(%d,%d), intensity=%d, intervention=%s",
-                type, posX, posY, intensity, interventionNeeded
-        );
-    }
-
 }

@@ -39,20 +39,15 @@ public class Environnement {
 
     // Simuler l'évolution de l'environnement
     public void update(long deltaTime) {
-        for (Anomalie a : anomalies) {
-            // Evolution de l'intensité
-            if (a.getIntensity() > 0) {
-                a.setIntensity(a.getIntensity() - 1);
-            }
+        // Créer une copie pour modifier sans problème
+        List<Anomalie> anomaliesCopy = new ArrayList<>(anomalies);
 
-            // Propagation
-            if (a.getIntensity() > 50) {
-                spreadAnomaly(a);
-            }
+        for (Anomalie a : anomaliesCopy) {
+            a.evolve();
         }
 
-        // Apparition aléatoire d'anomalies
-        if (Math.random() < 0.01) { // 1% de chance par update
+        // Apparition aléatoire
+        if (Math.random() < 0.01) {
             createRandomAnomaly();
         }
 
@@ -61,7 +56,6 @@ public class Environnement {
 
         lastUpdateTime = System.currentTimeMillis();
     }
-
     // Créer une anomalie aléatoire
     private void createRandomAnomaly() {
         int x = (int)(Math.random() * mapWidth);

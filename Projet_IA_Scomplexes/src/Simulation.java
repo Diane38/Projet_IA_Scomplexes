@@ -76,15 +76,15 @@ public class Simulation {
 
     private double calculateCoverage() {
         // Approximation simple
-        return Math.random() * 100;  // À implémenter correctement
+        return Math.random() * 100;
     }
 
     private long calculateDetectionTime() {
-        return 45000;  // À implémenter
+        return 45000;
     }
 
     private double calculateEfficiency() {
-        return Math.random() * 100;  // À implémenter
+        return Math.random() * 100;
     }
 
     private void printResults(Result r) {

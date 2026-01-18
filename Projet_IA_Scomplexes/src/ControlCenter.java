@@ -84,20 +84,19 @@ public class ControlCenter {
                     break;
 
                 case ACTIVE:
-                    Anomalie nearbyAnomaly = env.findNearbyAnomaly(d, 80);
+                    Anomalie nearbyAnomaly = env.findNearbyAnomaly(d, 100);
 
-                    if (nearbyAnomaly != null && !d.isMoving()) {
-                        d.moveTo(nearbyAnomaly.getPosX(), nearbyAnomaly.getPosY());
-                        System.out.println("Drone " + d.getDroneId() + " va vers anomalie à ("
-                                + nearbyAnomaly.getPosX() + "," + nearbyAnomaly.getPosY() + ")");
-                    }
-                    else if (d.getPosX() == nearbyAnomaly.getPosX() &&
-                            d.getPosY() == nearbyAnomaly.getPosY()) {
-                        d.setState(Drone.DroneState.ANALYZING);
-                        d.analyzeAnomaly(nearbyAnomaly);
-                        nearbyAnomaly.setDetected(true);
-                    }
-                    else if (!d.isMoving()) {
+                    if (nearbyAnomaly != null) {
+                        if (!d.isMoving()) {
+                            d.moveTo(nearbyAnomaly.getPosX(), nearbyAnomaly.getPosY());
+                        }
+                        else if (d.getPosX() == nearbyAnomaly.getPosX() &&
+                                d.getPosY() == nearbyAnomaly.getPosY()) {
+                            d.setState(Drone.DroneState.ANALYZING);
+                            d.analyzeAnomaly(nearbyAnomaly);
+                            nearbyAnomaly.setDetected(true);
+                        }
+                    } else if (!d.isMoving()) {
                         randomExploration(d, env.getMapWidth());
                     }
                     break;
@@ -112,12 +111,12 @@ public class ControlCenter {
     public void randomExploration(Drone d, int mapSize) {
         int newX = (int)(Math.random() * mapSize);
         int newY = (int)(Math.random() * mapSize);
-        d.moveTo(newX, newY);  // Au lieu de move()
+        d.moveTo(newX, newY);
     }
 
     private void moveTowardBase(Drone d) {
         if (d.getPosX() != posX || d.getPosY() != posY) {
-            d.moveTo(posX, posY);  // Au lieu de move()
+            d.moveTo(posX, posY);
         }
     }
 

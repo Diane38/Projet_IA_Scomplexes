@@ -19,7 +19,7 @@ public class UserInterface extends JPanel {
         this.anomalies = env.getAnomalies();
 
         // Lancer la boucle de simulation
-        startSimulation();
+        //startSimulation();
     }
 
     private void startSimulation() {
@@ -52,6 +52,7 @@ public class UserInterface extends JPanel {
         g.fillRect(0, 0, getWidth(), getHeight());
 
         drawGrid(g);
+        drawCentre(g);
         drawAnomalies(g);
         drawDrones(g);
         drawInfo(g);
@@ -135,6 +136,19 @@ public class UserInterface extends JPanel {
             g.drawString("D" + d.getDroneId(), x + 10, y + 15);
         }
     }
+    private void drawCentre(Graphics g){
+        int centerX = (controlCenter.getPosX() / tailleCase) * tailleCase;
+        int centerY = (controlCenter.getPosY() / tailleCase) * tailleCase;
+
+        g.setColor(Color.CYAN);
+        g.fillRect(centerX + 5, 5 + centerY, tailleCase - 10, tailleCase - 10);
+        g.setColor(Color.BLACK);
+        g.drawRect(centerX + 5, centerY + 5, tailleCase - 10, tailleCase - 10);
+
+        g.setColor(Color.BLACK);
+        g.setFont(new Font("Arial", Font.BOLD, 8));
+        g.drawString("CC", centerX + 10, centerY + 15);
+    }
 
     private void drawInfo(Graphics g) {
         g.setColor(Color.BLACK);
@@ -183,9 +197,10 @@ public class UserInterface extends JPanel {
 
             // type d'anomalie avec intensité affichée
             env.addAnomaly(new Anomalie(100, 100, "incendie", 80));
-            env.addAnomaly(new Anomalie(400, 400, "inondation", 60));
+            env.addAnomaly(new Anomalie(375, 375, "inondation", 60));
 
             UserInterface ui = new UserInterface(c, env);
+            ui.startSimulation();
 
             JFrame frame = new JFrame("Projet IA Complexes");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

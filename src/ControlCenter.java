@@ -44,8 +44,9 @@ public class ControlCenter {
     }
 
     public void datasReceived(Drone d) {
-        if (d.sendDatas(this)) {
+        if (d.getData() != null && !d.getData().isEmpty()) {
             this.datasCenter += d.getData() + "\n";
+            System.out.println("Données reçues du drone " + d.getDroneId());
         }
     }
 
@@ -100,7 +101,8 @@ public class ControlCenter {
                     } else if (!d.isMoving()) {
                         randomExploration(d, env.getMapWidth());
                     }
-                    d.sendDatas(this);
+
+                    datasReceived(d);
                     break;
 
                 case ANALYZING:

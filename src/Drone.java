@@ -58,7 +58,7 @@ public class Drone {
     public int getBatteryLevel() {return batteryLevel;}
     public int getDroneId() {return droneId;}
 
-    //renvoie true si les données du centre ont été envoyées
+    //renvoie true si les données du drone ont été envoyées
     // le drone ne peut envoyer qu'en dehors de la base
     public boolean sendDatas(ControlCenter c) {
         if (getPosX() != c.getPosX() || getPosY() != c.getPosY()) {

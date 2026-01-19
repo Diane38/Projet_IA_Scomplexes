@@ -19,7 +19,7 @@ public class UserInterface extends JPanel {
         this.anomalies = env.getAnomalies();
 
         // Lancer la boucle de simulation
-        //startSimulation();
+        startSimulation();
     }
 
     private void startSimulation() {
@@ -204,7 +204,6 @@ public class UserInterface extends JPanel {
             env.spreadAnomaly(test);
 
             UserInterface ui = new UserInterface(c, env);
-            ui.startSimulation();
 
             JFrame frame = new JFrame("Projet IA Complexes");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

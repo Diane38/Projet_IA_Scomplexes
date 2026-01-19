@@ -49,14 +49,15 @@ public class ControlCenter {
         }
     }
 
-    public void updateDrones(Drone d) {
+    /*public void updateDrones(Drone d) {
         if (d.getPosX() == this.posX && d.getPosY() == this.posY) {
             // Envoyer les mises à jour au drone
             d.setDatas(this.datasCenter);
             d.setState(Drone.DroneState.ACTIVE);
             d.setAnomaliesknown(anomalies);
+            System.out.println(datasCenter.toString());
         }
-    }
+    }*/
 
     // mise à jour la simulation
     public void updateSimulation(long deltaTime) {
@@ -99,6 +100,7 @@ public class ControlCenter {
                     } else if (!d.isMoving()) {
                         randomExploration(d, env.getMapWidth());
                     }
+                    d.sendDatas(this);
                     break;
 
                 case ANALYZING:
@@ -167,7 +169,7 @@ public class ControlCenter {
     public List<Anomalie> getAnomalies() {
         return anomalies;
     }
-    
+
     public void setAnomalies(List<Anomalie> anomalies) {
         this.anomalies = anomalies;
     }

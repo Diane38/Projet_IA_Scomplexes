@@ -47,6 +47,7 @@ public class ControlCenter {
         if (d.getData() != null && !d.getData().isEmpty()) {
             this.datasCenter += d.getData() + "\n";
             System.out.println("Données reçues du drone " + d.getDroneId());
+            d.setDatas("");
         }
     }
 

@@ -74,6 +74,7 @@ public class Drone {
     public void analyzeAnomaly(Anomalie a) {
         this.state = DroneState.ANALYZING;
         anomalieKnown.add(a);
+        //System.out.println(anomalieKnown.toString());
         // ajouter les données de l'anomalie
         this.datas = a.toString();
         returnToBase(c);
@@ -122,5 +123,9 @@ public class Drone {
 
     public List<Anomalie> getAnomalieKnown() {
         return anomalieKnown;
+    }
+
+    public void setAnomaliesknown(List<Anomalie> a){
+        this.anomalieKnown = a;
     }
 }

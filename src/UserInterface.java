@@ -195,6 +195,8 @@ public class UserInterface extends JPanel {
                 c.addDrone(d);
             }
 
+            
+
             // type d'anomalie avec intensité affichée
             Anomalie test= new Anomalie (100, 100, "incendie", 80);
             env.addAnomaly(test);

@@ -4,6 +4,7 @@ import java.util.List;
 public class ControlCenter {
     private int posX, posY;
     private String datasCenter;
+    private List<Anomalie> anomalies;
     private List<Drone> drones;
     private Environnement env;
 
@@ -28,6 +29,7 @@ public class ControlCenter {
         this.posX = posX;
         this.posY = posY;
         this.drones = new ArrayList<>();
+        this.anomalies= new ArrayList<>();
         this.env = env;
         this.datasCenter = "";
     }
@@ -41,20 +43,18 @@ public class ControlCenter {
         return drones;
     }
 
-    //renvoie true si les données ont été reçues dans la base
     public void datasReceived(Drone d) {
         if (d.sendDatas(this)) {
             this.datasCenter += d.getData() + "\n";
         }
     }
 
-    //renvoie true si les drones ont reçus leur mise a jour
-    // la mise à jour est reçue seulement quand les drones sont a la base
     public void updateDrones(Drone d) {
         if (d.getPosX() == this.posX && d.getPosY() == this.posY) {
             // Envoyer les mises à jour au drone
             d.setDatas(this.datasCenter);
             d.setState(Drone.DroneState.ACTIVE);
+            d.setAnomaliesknown(anomalies);
         }
     }
 
@@ -103,6 +103,8 @@ public class ControlCenter {
 
                 case ANALYZING:
                     d.setState(Drone.DroneState.ACTIVE);
+                    break;
+                case INACTIVE:
                     break;
             }
         }
@@ -160,5 +162,13 @@ public class ControlCenter {
         int dx = d.getPosX() - a.getPosX();
         int dy = d.getPosY() - a.getPosY();
         return Math.sqrt(dx*dx + dy*dy);
+    }
+
+    public List<Anomalie> getAnomalies() {
+        return anomalies;
+    }
+    
+    public void setAnomalies(List<Anomalie> anomalies) {
+        this.anomalies = anomalies;
     }
 }

@@ -63,12 +63,12 @@ public class Environnement {
         String[] types = {"incendie", "inondation", "secheresse"};
         String type = types[(int)(Math.random() * types.length)];
 
-        Anomalie a = new Anomalie(x, y, type, 100);
+        Anomalie a = new Anomalie(x, y, type, (int)(100 * Math.random()));
         anomalies.add(a);
     }
 
     // Propagation d'anomalie
-    private void spreadAnomaly(Anomalie a) {
+    public void spreadAnomaly(Anomalie a) {
         if (Math.random() < 0.1) { // 10% de chance de propagation
             int newX = a.getPosX() + (int)(Math.random() * 5 - 2); // -2 à +2
             int newY = a.getPosY() + (int)(Math.random() * 5 - 2);

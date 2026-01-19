@@ -68,13 +68,13 @@ public class Drone {
         this.state = DroneState.ANALYZING;
         // ajouter les données de l'anomalie
         this.datas = a.toString();
+        //System.out.println(a.toString());
     }
 
     // le drone revient à la base
     public void returnToBase(ControlCenter c) {
         this.state = DroneState.RETURNING_TO_BASE;
-        this.posX = c.getPosX();
-        this.posY = c.getPosY();
+        moveTo(c.getPosX(), c.getPosY());
     }
 
     // simule la perte de batterie au fur et à mesure du temps

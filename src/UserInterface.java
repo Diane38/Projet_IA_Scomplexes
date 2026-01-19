@@ -196,8 +196,10 @@ public class UserInterface extends JPanel {
             }
 
             // type d'anomalie avec intensité affichée
-            env.addAnomaly(new Anomalie(100, 100, "incendie", 80));
+            Anomalie test= new Anomalie (100, 100, "incendie", 80);
+            env.addAnomaly(test);
             env.addAnomaly(new Anomalie(375, 375, "inondation", 60));
+            env.spreadAnomaly(test);
 
             UserInterface ui = new UserInterface(c, env);
             ui.startSimulation();

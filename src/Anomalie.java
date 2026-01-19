@@ -43,10 +43,14 @@ public class Anomalie {
 
     // simuler l'évolution de l'anomalie
     public void evolve() {
-        if (intensity > 0 && intensity <= 100) {
-            intensity -= 0.05;
+        if (intensity > 0 && intensity < 100) {
+            intensity += 0.05;;
         }
         this.interventionNeeded = determineIntervention(type, intensity);
+    }
+
+    public void degrade(int amount) {
+        intensity -= amount;
     }
 
     // afficher les informations

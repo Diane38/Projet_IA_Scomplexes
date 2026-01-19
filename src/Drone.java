@@ -16,10 +16,10 @@ public class Drone {
     private int destY;
     private boolean isMoving = false;
     private List<Anomalie> anomalieKnown;
-    Environnement env = new Environnement(500, 500);
-    ControlCenter c = new ControlCenter(400, 400, env);
+    private Environnement env;
+    private ControlCenter c;
 
-    public Drone(int droneId) {
+    public Drone(int droneId, ControlCenter c, Environnement environnement) {
         anomalieKnown= new ArrayList<>();
         this.droneId = droneId;
         this.state = DroneState.INACTIVE;  // ← Initialiser l'état
@@ -28,6 +28,8 @@ public class Drone {
         this.posX = 0;
         this.posY = 0;
         this.activationTime = System.currentTimeMillis();
+        this.c=c;
+        this.env=environnement;
     }
 
     public void setState(DroneState state) {

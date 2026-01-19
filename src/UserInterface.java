@@ -184,7 +184,7 @@ public class UserInterface extends JPanel {
 
             // Ajouter 7 drones
             for (int i = 0; i < 7; i++) {
-                Drone d = new Drone(i);
+                Drone d = new Drone(i,c,env);
 
                 // Disperser les drones
                 int offsetX = (i % 3) * 80;

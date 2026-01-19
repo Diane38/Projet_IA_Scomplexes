@@ -11,13 +11,60 @@ public class UserInterface extends JPanel {
     private List<Anomalie> anomalies;
     private List<Drone> drones;
     private boolean running = true;
+    private JSpinner spinAnomalies;
+    private JSpinner spinDuree;
+    private Simulation simulation;
+
+    private void lancerScenario() {
+        int maxAnomalies = (int) spinAnomalies.getValue();
+        int dureeSec = (int) spinDuree.getValue();
+
+        new Thread(() -> {
+            simulation.runScenario("Scénario Max " + maxAnomalies, () -> {
+                // On calcule un nombre aléatoire entre 1 et le Maximum choisi
+                int nbAleatoire = (int)(Math.random() * maxAnomalies) + 1;
+
+                System.out.println("Génération de " + nbAleatoire + " anomalies (Max fixé à " + maxAnomalies + ")");
+
+                for (int i = 0; i < nbAleatoire; i++) {
+                    int x = (int)(Math.random() * (mapSize - 50));
+                    int y = (int)(Math.random() * (mapSize - 50));
+                    environnement.addAnomaly(new Anomalie(x, y, "incendie", 80));
+                }
+            }, (long)dureeSec * 1000);
+        }).start();
+    }
+
+    private JPanel createSidePanel() {
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+        // Réglage Anomalies
+        panel.add(new JLabel("Nb Anomalies:"));
+        spinAnomalies = new JSpinner(new SpinnerNumberModel(10, 1, 100, 1));
+        panel.add(spinAnomalies);
+
+        // Réglage Durée
+        panel.add(new JLabel("Durée en secondes:"));
+        spinDuree = new JSpinner(new SpinnerNumberModel(30, 5, 300, 5));
+        panel.add(spinDuree);
+
+        // Bouton Lancer
+        JButton btnStart = new JButton("Lancer Scénario");
+        btnStart.addActionListener(e -> lancerScenario());
+        panel.add(Box.createRigidArea(new Dimension(0, 10)));
+        panel.add(btnStart);
+
+        return panel;
+    }
 
     public UserInterface(ControlCenter c, Environnement env) {
         this.controlCenter = c;
         this.environnement = env;
         this.drones = c.getDrones();
         this.anomalies = env.getAnomalies();
-
+        this.simulation = new Simulation(c, env);
         // Lancer la boucle de simulation
         startSimulation();
     }
@@ -161,11 +208,17 @@ public class UserInterface extends JPanel {
         int chargingCount = (int) drones.stream()
                 .filter(d -> d.getState() == Drone.DroneState.CHARGING)
                 .count();
-
+        // somme de la distance de tout les drones
+        double sommeDistances = 0;
+        for (Drone d : drones) {
+            sommeDistances += d.getTotalDistance();
+        }
         g.drawString("Drones actifs: " + activeCount, 10, yOffset);
         g.drawString("Drones en recharge: " + chargingCount, 10, yOffset + 20);
         g.drawString("Anomalies détectées: " + anomalies.size(), 10, yOffset + 40);
         g.drawString("Données du centre: " + controlCenter.getData().split("\n").length + " entrées", 10, yOffset + 60);
+        g.drawString("Distance totale (essaim): " + String.format("%.2f", sommeDistances) + " px", 10, yOffset+80);
+        g.drawString("Anomalies: " + environnement.getAnomalies().size(), 10, yOffset + 100);
     }
 
     @Override
@@ -195,8 +248,6 @@ public class UserInterface extends JPanel {
                 c.addDrone(d);
             }
 
-            
-
             // type d'anomalie avec intensité affichée
             Anomalie test= new Anomalie (100, 100, "incendie", 80);
             env.addAnomaly(test);
@@ -207,7 +258,9 @@ public class UserInterface extends JPanel {
 
             JFrame frame = new JFrame("Projet IA Complexes");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.add(ui);
+
+            frame.add(ui, BorderLayout.CENTER);
+            frame.add(ui.createSidePanel(), BorderLayout.EAST);
             frame.pack();
             frame.setSize(850, 950);
             frame.setLocationRelativeTo(null);

@@ -7,6 +7,7 @@ public class Drone {
     public String datas ; // données récoltées
     private int posX;
     private int posY;
+    private int totalDistance ;
     private int batteryLevel;        // 0 à 100 (ou temps en secondes)
     private long activationTime;     // quand le drone a été activé
     private static final int MAX_ACTIVE_TIME = 30 * 60 * 1000; // 30 min en ms
@@ -44,9 +45,13 @@ public class Drone {
     public String getData(){
         return this.datas;
     }
-    public void setPosDrone(int posX, int posY){
-         this.posX=posX;
-         this.posY=posY;
+    public void setPosDrone(int x, int y) {
+        double d = Math.sqrt(Math.pow(x - this.posX, 2) + Math.pow(y - this.posY, 2));
+        if (d > 0.1) {
+            this.totalDistance += d;
+        }
+        this.posX = x;
+        this.posY = y;
     }
     public int getPosX(){
         return this.posX;
@@ -57,6 +62,8 @@ public class Drone {
     public void setBatteryLevel(int batteryLevel) {this.batteryLevel = batteryLevel;}
     public int getBatteryLevel() {return batteryLevel;}
     public int getDroneId() {return droneId;}
+    public void resetDistance() {this.totalDistance = 0;}
+    public double getTotalDistance() { return totalDistance;}
 
     //renvoie true si les données du drone ont été envoyées
     // le drone ne peut envoyer qu'en dehors de la base

@@ -15,7 +15,7 @@ public class Environnement {
 
     // Ajouter une anomalie à la carte
     public void addAnomaly(Anomalie a) {
-        anomalies.add(a);
+        this.anomalies.add(a);
     }
 
     // Obtenir les anomalies

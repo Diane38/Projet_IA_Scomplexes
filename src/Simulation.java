@@ -21,6 +21,7 @@ public class Simulation {
         for (Drone d : controlCenter.getDrones()) {
             d.setState(Drone.DroneState.ACTIVE);
             d.setBatteryLevel(100);
+            d.resetDistance();
         }
 
         setup.run();
@@ -28,21 +29,21 @@ public class Simulation {
         int detected = 0;
 
         // Simuler pendant une durée X (en secondes)
-        while (System.currentTimeMillis() - startTime < duration) {
-            controlCenter.updateSimulation(1000);  // 1 seconde
-            detected = 0;
-            for (Anomalie a : environnement.getAnomalies()) {
-                if (a.isDetected()) {
-                    detected++;
-                }
-            }
+        try {
+            Thread.sleep(duration);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        for (Anomalie a : environnement.getAnomalies()) {
+            if (a.isDetected()) detected++;
         }
 
         // Obtenir les résultats
         Result result = new Result(
                 name,
                 calculateCoverage(),
-                calculateDetectionTime(),
+                0,
                 detected,
                 calculateEfficiency()
         );

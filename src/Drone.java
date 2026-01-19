@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.List;
+
 public class Drone {
     public enum DroneState { ACTIVE, INACTIVE, CHARGING, ANALYZING, RETURNING_TO_BASE } ;
     private DroneState state;
@@ -12,8 +15,12 @@ public class Drone {
     private int destX;
     private int destY;
     private boolean isMoving = false;
+    private List<Anomalie> anomalieKnown;
+    Environnement env = new Environnement(500, 500);
+    ControlCenter c = new ControlCenter(400, 400, env);
 
     public Drone(int droneId) {
+        anomalieKnown= new ArrayList<>();
         this.droneId = droneId;
         this.state = DroneState.INACTIVE;  // ← Initialiser l'état
         this.batteryLevel = 100;
@@ -30,10 +37,10 @@ public class Drone {
         return this.state;
     }
     public void setDatas(String datas) {
-         this.datas =datas;
+         this.datas = datas;
     }
     public String getData(){
-        return this.datas ;
+        return this.datas;
     }
     public void setPosDrone(int posX, int posY){
          this.posX=posX;
@@ -66,8 +73,10 @@ public class Drone {
     // analyse d'une anomalie : le drone récolte les données
     public void analyzeAnomaly(Anomalie a) {
         this.state = DroneState.ANALYZING;
+        anomalieKnown.add(a);
         // ajouter les données de l'anomalie
         this.datas = a.toString();
+        returnToBase(c);
         //System.out.println(a.toString());
     }
 

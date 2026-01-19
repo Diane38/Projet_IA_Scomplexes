@@ -21,6 +21,14 @@ public class UserInterface extends JPanel {
 
         new Thread(() -> {
             simulation.runScenario("Scénario Max " + maxAnomalies, () -> {
+                // Reset data in ControlCenter and drones
+                controlCenter.setDatasCenter("");
+                for (Drone d : drones) {
+                    d.setDatas("");
+                }
+                // Clear existing anomalies
+                environnement.getAnomalies().clear();
+
                 // On calcule un nombre aléatoire entre 1 et le Maximum choisi
                 int nbAleatoire = (int)(Math.random() * maxAnomalies) + 1;
 

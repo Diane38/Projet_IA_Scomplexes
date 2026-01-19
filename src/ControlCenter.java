@@ -114,11 +114,11 @@ public class ControlCenter {
         d.moveTo(newX, newY);
     }
 
-    private void moveTowardBase(Drone d) {
+    /*private void moveTowardBase(Drone d) {
         if (d.getPosX() != posX || d.getPosY() != posY) {
             d.moveTo(posX, posY);
         }
-    }
+    }*/
 
     // assigner des zones à la patrouille de drones
     public void assignPatrolZones(int gridSize) {

@@ -115,7 +115,12 @@ public class Drone {
         if (posY < destY) posY++;
         else if (posY > destY) posY--;
     }
+    
     public boolean isMoving() {
         return isMoving;
+    }
+
+    public List<Anomalie> getAnomalieKnown() {
+        return anomalieKnown;
     }
 }

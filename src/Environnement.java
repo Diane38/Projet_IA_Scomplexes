@@ -26,13 +26,16 @@ public class Environnement {
     // Trouver l'anomalie la plus proche
     public Anomalie findNearbyAnomaly(Drone d, int radius) {
         for (Anomalie a : anomalies) {
-            double dist = Math.sqrt(
+            if(!d.getAnomalieKnown().contains(a)){
+                double dist = Math.sqrt(
                     Math.pow(d.getPosX() - a.getPosX(), 2) +
                             Math.pow(d.getPosY() - a.getPosY(), 2)
             );
             if (dist <= radius) {
                 return a;
             }
+            }
+            
         }
         return null;
     }
